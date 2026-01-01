@@ -1,0 +1,56 @@
+name: KFD HDT Pipeline CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Validate gene signature
+      run: |
+        python -c "
+import pandas as pd
+df = pd.read_csv('data/gene_signature.csv')
+assert len(df) == 50, f'Expected 50 genes, got {len(df)}'
+print('✓ Gene signature validated: 50 genes')
+"
+    
+    - name: Run pipeline
+      run: python scripts/run_pipeline.py
+    
+    - name: Validate outputs
+      run: |
+        python -c "
+import pandas as pd
+targets = pd.read_csv('outputs/tables/targets_ranked.csv')
+compounds = pd.read_csv('outputs/tables/compounds_ranked.csv')
+assert len(targets) == 50
+assert len(compounds) >= 20
+print(f'✓ Outputs validated: {len(targets)} targets, {len(compounds)} compounds')
+"
+    
+    - name: Generate figures
+      run: python scripts/generate_figures.py
+    
+    - name: Verify figures
+      run: |
+        ls -la outputs/figures/
+        test -f outputs/figures/figure1_target_prioritization.png
+        echo "✓ All figures generated"

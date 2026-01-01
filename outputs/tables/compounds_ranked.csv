@@ -1,0 +1,26 @@
+Drug,Target,Related_Gene,pChEMBL,Phase,Evidence
+Atorvastatin,Endothelium,ANGPT2,8.5,4,Vascular protection
+Simvastatin,HMGCR,ANGPT2,8.3,4,Endothelial benefit
+Bosentan,EDNRA/B,EDN1,8.8,4,Endothelin antagonist
+Tocilizumab,IL6R,IL6,9.0,4,IL-6R blockade
+Anakinra,IL1R1,IL1B,8.5,4,IL-1 receptor antagonist
+Etanercept,TNF,TNF,9.1,4,TNF inhibitor
+Pentoxifylline,PDE/TNF,TNF,6.2,4,TNF reduction
+Dexamethasone,GR,IL6,8.0,4,Anti-inflammatory
+Tranexamic acid,Plasmin,PLAT,6.5,4,Antifibrinolytic
+Fresh frozen plasma,Coag factors,F2,0.0,4,Replacement
+Vitamin K,VKORC1,F2,5.0,4,Coagulation support
+Platelet transfusion,Platelets,ITGA2B,0.0,4,Standard care
+Eltrombopag,THPO,ITGA2B,8.5,4,TPO agonist
+Romiplostim,THPO,ITGA2B,9.0,4,TPO agonist
+Ribavirin,RNA polymerase,IFNA1,6.0,4,Broad antiviral
+Interferon-alpha,IFNAR,IFNA1,8.0,4,Antiviral cytokine
+Favipiravir,RdRp,IFNA1,6.5,4,Broad antiviral
+Erythropoietin,EPOR,EPO,9.5,4,Neuroprotection
+Mannitol,Osmotic,AQP4,4.5,4,Cerebral edema
+N-Acetylcysteine,GSH,HMOX1,5.5,4,Antioxidant
+Vitamin C,Antioxidant,SOD2,4.0,4,Antioxidant
+IV fluids,Volume,VWF,0.0,4,Supportive care
+Antipyretics,COX,TNF,5.5,4,Fever control
+Baricitinib,JAK1/2,STAT1,8.5,4,JAK inhibitor
+Ruxolitinib,JAK1/2,STAT1,9.0,4,JAK inhibitor

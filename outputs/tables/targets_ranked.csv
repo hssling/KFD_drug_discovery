@@ -1,0 +1,51 @@
+Rank,Gene,Symbol,Pathway,Phase_Relevance,PubMed_Count,Druggability,Composite_Score
+1,Tumor Necrosis Factor,TNF,cytokine,Febrile,1250,High,0.9424405004037
+2,Interleukin-6,IL6,cytokine,Both,980,High,0.8568415192270858
+3,Angiopoietin-2,ANGPT2,endothelial,Hemorrhagic,520,High,0.7669535018825779
+4,Interleukin-1 Beta,IL1B,cytokine,Febrile,720,High,0.7485609619674938
+5,Vascular Endothelial Growth Factor A,VEGFA,endothelial,Hemorrhagic,650,High,0.7400085656393178
+6,Tissue Factor,F3,coagulation,Hemorrhagic,380,High,0.732573178957649
+7,Interferon Gamma,IFNG,cytokine,Febrile,650,High,0.7265921978629458
+8,Erythropoietin,EPO,neuroprotection,Neurological,580,High,0.6969069035106393
+9,Endothelial Nitric Oxide Synthase,NOS3,endothelial,Protective,485,High,0.6961323973625487
+10,Plasminogen Activator Inhibitor-1,SERPINE1,coagulation,Hemorrhagic,420,Moderate,0.6803410783462222
+11,Signal Transducer and Activator 1,STAT1,interferon,Febrile,520,High,0.6717565332051416
+12,VEGF Receptor 2,KDR,endothelial,Hemorrhagic,380,High,0.6693689316743041
+13,Interleukin-10,IL10,cytokine,Protective,485,High,0.6665294248792536
+14,Heme Oxygenase-1,HMOX1,oxidative,Protective,520,High,0.6657096362631212
+15,Interferon Alpha 1,IFNA1,interferon,Febrile,485,High,0.6638399607038397
+16,Prothrombin,F2,coagulation,Hemorrhagic,320,High,0.6593385834136017
+17,Interferon Beta 1,IFNB1,interferon,Febrile,420,High,0.6587985387729878
+18,Angiopoietin-1,ANGPT1,endothelial,Protective,380,High,0.6521285079750583
+19,Endothelin-1,EDN1,endothelial,Hemorrhagic,320,High,0.6476534088932683
+20,Interleukin-8,IL8,cytokine,Hemorrhagic,520,Moderate,0.6454674835316294
+21,Brain Derived Neurotrophic Factor,BDNF,neurological,Neurological,420,High,0.6376331396855754
+22,Nuclear Factor Erythroid 2 Like 2,NFE2L2,oxidative,Protective,420,High,0.6353967338679447
+23,Nerve Growth Factor,NGF,neurological,Neurological,380,High,0.6309646027890876
+24,P-Selectin,SELP,platelet,Hemorrhagic,280,High,0.6308317754741456
+25,Von Willebrand Factor,VWF,endothelial,Hemorrhagic,410,Moderate,0.6303602752650763
+26,Tissue Plasminogen Activator,PLAT,coagulation,Both,285,High,0.6281552641079693
+27,Thrombomodulin,THBD,coagulation,Protective,280,Moderate,0.6237487240870981
+28,TEK Receptor Tyrosine Kinase,TEK,endothelial,Protective,245,High,0.6162929112939977
+29,C-C Motif Chemokine Ligand 2,CCL2,cytokine,Hemorrhagic,380,Moderate,0.6042406807734164
+30,C-X-C Motif Chemokine Ligand 10,CXCL10,cytokine,Febrile,420,Moderate,0.5959055744638696
+31,Fibrinogen Alpha,FGA,coagulation,Hemorrhagic,280,Moderate,0.5891977211335485
+32,Integrin Beta-3,ITGB3,platelet,Hemorrhagic,320,Moderate,0.5794838462603893
+33,Integrin Alpha-IIb,ITGA2B,platelet,Hemorrhagic,285,Moderate,0.5753749284970707
+34,2'-5'-Oligoadenylate Synthetase 1,OAS1,interferon,Febrile,380,Moderate,0.5710002184315267
+35,Platelet Factor 4,PF4,platelet,Hemorrhagic,245,Moderate,0.5587193346683844
+36,MX Dynamin Like GTPase 1,MX1,interferon,Febrile,320,Moderate,0.5554213176352142
+37,Superoxide Dismutase 2,SOD2,oxidative,Protective,380,Moderate,0.5552589690107632
+38,ISG15 Ubiquitin Like Modifier,ISG15,interferon,Febrile,285,Moderate,0.5527483877356473
+39,Endothelial Protein C Receptor,PROCR,coagulation,Protective,190,Moderate,0.5490192430451725
+40,Glycoprotein Ib Alpha,GP1BA,platelet,Hemorrhagic,180,Moderate,0.5481456207074991
+41,Aquaporin 4,AQP4,neurological,Neurological,245,Moderate,0.5452380155282645
+42,Interferon Regulatory Factor 7,IRF7,interferon,Febrile,245,Moderate,0.5414058349531105
+43,Protein S,PROS1,coagulation,Protective,145,Moderate,0.5378600134301398
+44,Tissue Factor Pathway Inhibitor,TFPI,coagulation,Protective,180,Moderate,0.5367438290832811
+45,Claudin-5,CLDN5,neurological,Neurological,180,Moderate,0.5252682494973826
+46,Tight Junction Protein 1,TJP1,neurological,Neurological,180,Moderate,0.5239408666635207
+47,Glutathione Peroxidase 1,GPX1,oxidative,Protective,245,Moderate,0.5142854814930768
+48,NAD(P)H Quinone Dehydrogenase 1,NQO1,oxidative,Protective,180,Moderate,0.5130138276876387
+49,Occludin,OCLN,neurological,Neurological,145,Moderate,0.5044001126846617
+50,Pro-Platelet Basic Protein,PPBP,platelet,Hemorrhagic,145,Low,0.4765914592151385

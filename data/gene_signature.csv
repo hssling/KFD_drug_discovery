@@ -1,0 +1,51 @@
+Gene,Symbol,Pathway,Phase_Relevance,PubMed_Count,Druggability,Description
+Angiopoietin-2,ANGPT2,endothelial,Hemorrhagic,520,High,Vascular leak marker in VHF
+Angiopoietin-1,ANGPT1,endothelial,Protective,380,High,Endothelial stabilization
+Von Willebrand Factor,VWF,endothelial,Hemorrhagic,410,Moderate,Endothelial damage marker
+Vascular Endothelial Growth Factor A,VEGFA,endothelial,Hemorrhagic,650,High,Vascular permeability
+TEK Receptor Tyrosine Kinase,TEK,endothelial,Protective,245,High,Tie2 receptor
+Thrombomodulin,THBD,coagulation,Protective,280,Moderate,Anticoagulant
+Endothelial Protein C Receptor,PROCR,coagulation,Protective,190,Moderate,Activated protein C
+Endothelin-1,EDN1,endothelial,Hemorrhagic,320,High,Vasoconstrictor
+Endothelial Nitric Oxide Synthase,NOS3,endothelial,Protective,485,High,NO production
+VEGF Receptor 2,KDR,endothelial,Hemorrhagic,380,High,VEGF signaling
+Tissue Factor,F3,coagulation,Hemorrhagic,380,High,DIC initiator
+Plasminogen Activator Inhibitor-1,SERPINE1,coagulation,Hemorrhagic,420,Moderate,Fibrinolysis inhibitor
+Tissue Plasminogen Activator,PLAT,coagulation,Both,285,High,Fibrinolysis
+Tissue Factor Pathway Inhibitor,TFPI,coagulation,Protective,180,Moderate,Anticoagulant
+Protein S,PROS1,coagulation,Protective,145,Moderate,Anticoagulant cofactor
+Prothrombin,F2,coagulation,Hemorrhagic,320,High,Coagulation cascade
+Fibrinogen Alpha,FGA,coagulation,Hemorrhagic,280,Moderate,Clot formation
+Tumor Necrosis Factor,TNF,cytokine,Febrile,1250,High,Pro-inflammatory
+Interleukin-6,IL6,cytokine,Both,980,High,Acute phase response
+Interleukin-1 Beta,IL1B,cytokine,Febrile,720,High,Inflammasome effector
+Interferon Gamma,IFNG,cytokine,Febrile,650,High,Antiviral
+Interleukin-10,IL10,cytokine,Protective,485,High,Anti-inflammatory
+C-C Motif Chemokine Ligand 2,CCL2,cytokine,Hemorrhagic,380,Moderate,Monocyte recruitment
+C-X-C Motif Chemokine Ligand 10,CXCL10,cytokine,Febrile,420,Moderate,T cell recruitment
+Interleukin-8,IL8,cytokine,Hemorrhagic,520,Moderate,Neutrophil chemotaxis
+Integrin Alpha-IIb,ITGA2B,platelet,Hemorrhagic,285,Moderate,Platelet aggregation
+Integrin Beta-3,ITGB3,platelet,Hemorrhagic,320,Moderate,Platelet aggregation
+Glycoprotein Ib Alpha,GP1BA,platelet,Hemorrhagic,180,Moderate,Platelet adhesion
+Platelet Factor 4,PF4,platelet,Hemorrhagic,245,Moderate,Megakaryocyte-derived
+Pro-Platelet Basic Protein,PPBP,platelet,Hemorrhagic,145,Low,Platelet chemokine
+P-Selectin,SELP,platelet,Hemorrhagic,280,High,Platelet-endothelial
+Interferon Alpha 1,IFNA1,interferon,Febrile,485,High,Type I IFN
+Interferon Beta 1,IFNB1,interferon,Febrile,420,High,Type I IFN antiviral
+2'-5'-Oligoadenylate Synthetase 1,OAS1,interferon,Febrile,380,Moderate,ISG antiviral
+MX Dynamin Like GTPase 1,MX1,interferon,Febrile,320,Moderate,Antiviral effector
+ISG15 Ubiquitin Like Modifier,ISG15,interferon,Febrile,285,Moderate,ISG antiviral
+Interferon Regulatory Factor 7,IRF7,interferon,Febrile,245,Moderate,IFN transcription
+Signal Transducer and Activator 1,STAT1,interferon,Febrile,520,High,IFN signaling
+Claudin-5,CLDN5,neurological,Neurological,180,Moderate,BBB tight junction
+Occludin,OCLN,neurological,Neurological,145,Moderate,BBB integrity
+Tight Junction Protein 1,TJP1,neurological,Neurological,180,Moderate,ZO-1 BBB
+Aquaporin 4,AQP4,neurological,Neurological,245,Moderate,Brain edema
+Brain Derived Neurotrophic Factor,BDNF,neurological,Neurological,420,High,Neuroprotection
+Nerve Growth Factor,NGF,neurological,Neurological,380,High,Neurotrophin
+Heme Oxygenase-1,HMOX1,oxidative,Protective,520,High,Oxidative stress
+Superoxide Dismutase 2,SOD2,oxidative,Protective,380,Moderate,Antioxidant
+Nuclear Factor Erythroid 2 Like 2,NFE2L2,oxidative,Protective,420,High,Master antioxidant
+NAD(P)H Quinone Dehydrogenase 1,NQO1,oxidative,Protective,180,Moderate,Detoxification
+Glutathione Peroxidase 1,GPX1,oxidative,Protective,245,Moderate,Glutathione metabolism
+Erythropoietin,EPO,neuroprotection,Neurological,580,High,Neuroprotectant

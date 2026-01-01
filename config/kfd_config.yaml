@@ -1,0 +1,73 @@
+# KFD (Kyasanur Forest Disease) HDT Pipeline Configuration
+# Focus: Tick-borne Viral Hemorrhagic Fever endemic to Karnataka
+
+project:
+  name: "KFD_HDT_Pipeline"
+  version: "1.0.0"
+  author: "Siddalingaiah H S"
+  email: "hssling@yahoo.com"
+  orcid: "0000-0002-4771-8285"
+  institution: "SIMS Tumkur, Karnataka"
+
+disease:
+  name: "Kyasanur Forest Disease"
+  pathogen: "KFD virus (Flaviviridae)"
+  icd10: "A98.2"
+  endemic_region: "Karnataka Western Ghats"
+  vector: "Haemaphysalis spinigera tick"
+  reservoir: "Monkeys, small mammals"
+  cfr: "3-5%"
+  annual_cases: "400-500"
+
+gene_signature:
+  size: 50
+  source: "GEO_curated + VHF_literature"
+  reference_datasets:
+    - GSE17156   # Flavivirus infection
+    - GSE43777   # Dengue hemorrhagic fever
+    - GSE51808   # Hemorrhagic fever signatures
+    - GSE38246   # Tick-borne encephalitis
+
+pathways:
+  endothelial:
+    genes: [ANGPT2, ANGPT1, VWF, VEGFA, TEK, THBD, PROCR, EDN1, NOS3, KDR]
+    weight: 0.95
+  coagulation:
+    genes: [F3, SERPINE1, PLAT, TFPI, PROS1, THBD, F2, FGA]
+    weight: 0.95
+  cytokine:
+    genes: [TNF, IL6, IL1B, IFNG, IL10, CCL2, CXCL10, IL8]
+    weight: 0.90
+  platelet:
+    genes: [ITGA2B, ITGB3, GP1BA, PF4, PPBP, SELP]
+    weight: 0.90
+  interferon:
+    genes: [IFNA1, IFNB1, OAS1, MX1, ISG15, IRF7, STAT1]
+    weight: 0.85
+  neurological:
+    genes: [CLDN5, OCLN, TJP1, AQP4, BDNF, NGF]
+    weight: 0.85
+  oxidative:
+    genes: [HMOX1, SOD2, NFE2L2, NQO1, GPX1]
+    weight: 0.80
+
+clinical_phases:
+  phase1: "Febrile (days 1-7): high fever, myalgia"
+  phase2: "Hemorrhagic (days 7-14): bleeding, thrombocytopenia"
+  phase3: "Neurological (if progresses): encephalitis"
+  phase4: "Recovery or death"
+
+scoring:
+  weights:
+    omics: 0.35
+    open_targets: 0.25
+    druggability: 0.20
+    pathway: 0.10
+    repurposing: 0.10
+
+output:
+  figures: 5
+  tables: 3
+  references: 35
+  word_count: 3200
+  format: "Vancouver_superscript"
