@@ -410,7 +410,7 @@ def create_blinded_article():
     doc.add_heading('Pathway Analysis', level=2)
     
     p = doc.add_paragraph()
-    add_formatted_run(p, 'Endothelial and coagulation pathways demonstrated highest mean scores (0.51±0.06), significantly exceeding interferon signaling (0.44±0.05, FDR p=0.02) [Table 3, Figure 3-4].')
+    add_formatted_run(p, 'Endothelial and coagulation pathways demonstrated highest mean scores (0.51±0.06), significantly exceeding interferon signaling (0.44±0.05, FDR p=0.02) [Table 3]. Compound-target potency relationships are shown in Figure 3, and pathway distribution patterns in Figure 4.')
     
     # TABLE 3
     doc.add_paragraph()
@@ -473,7 +473,7 @@ def create_blinded_article():
         
         'Regarding antivirals, ribavirin has in vitro activity against KFDV but no clinical efficacy data exist for KFD—these remain exploratory.[23] Favipiravir warrants investigation given success against Ebola, though early administration before peak viremia is challenging in endemic areas.[24,29] Outcome prediction biomarkers identified in dengue may guide future clinical trial design for KFD.[28]',
         
-        'The seasonal epidemiology of KFD (December-June transmission peak) provides an opportunity for prophylactic HDT in high-risk forest workers during outbreak seasons, pending clinical validation.'
+        'The seasonal epidemiology of KFD (December-June transmission peak) provides an opportunity for prophylactic HDT in high-risk forest workers during outbreak seasons [Figure 5], pending clinical validation.'
     ]
     
     for text in discussion_paras:
