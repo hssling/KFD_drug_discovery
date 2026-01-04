@@ -353,7 +353,7 @@ def create_blinded_article():
     
     p = doc.add_paragraph()
     p.add_run('ANGPT2 (Rank 1): ').bold = True
-    add_formatted_run(p, 'Angiopoietin-2 mediates vascular leak in viral hemorrhagic fevers. Elevated Ang-2 correlates with disease severity in dengue.[18] Ang-2 antagonizes Tie2 receptor, destabilizing endothelial junctions.')
+    add_formatted_run(p, 'Angiopoietin-2 mediates vascular leak in viral hemorrhagic fevers. Elevated Ang-2 correlates with disease severity in dengue, a related flavivirus.[18,26] Ang-2 antagonizes Tie2 receptor, destabilizing endothelial junctions, as demonstrated through NS1-induced endothelial permeability studies.[27]')
     
     p = doc.add_paragraph()
     p.add_run('F3 (Tissue Factor, Rank 6): ').bold = True
@@ -471,7 +471,7 @@ def create_blinded_article():
         
         'Importantly, we identified compounds immediately available in Karnataka. Atorvastatin ($5/course), tranexamic acid ($10/course), and vitamin K ($2) could be implemented in district hospitals during outbreaks, contrasting with biologics impractical in peripheral settings.[22]',
         
-        'Regarding antivirals, ribavirin has in vitro activity against KFDV but no clinical efficacy data exist for KFD—these remain exploratory.[23] Favipiravir warrants investigation given success against Ebola, though early administration before peak viremia is challenging in endemic areas.[24]',
+        'Regarding antivirals, ribavirin has in vitro activity against KFDV but no clinical efficacy data exist for KFD—these remain exploratory.[23] Favipiravir warrants investigation given success against Ebola, though early administration before peak viremia is challenging in endemic areas.[24,29] Outcome prediction biomarkers identified in dengue may guide future clinical trial design for KFD.[28]',
         
         'The seasonal epidemiology of KFD (December-June transmission peak) provides an opportunity for prophylactic HDT in high-risk forest workers during outbreak seasons, pending clinical validation.'
     ]
@@ -491,7 +491,7 @@ def create_blinded_article():
     
     doc.add_heading('Limitations', level=2)
     p = doc.add_paragraph()
-    add_formatted_run(p, 'Gene signature derived from related VHFs rather than KFD-specific data, though justified by flavivirus phylogenetic similarity. Computational predictions require prospective clinical validation. Drug availability varies across Karnataka\'s healthcare tiers.[25]')
+    add_formatted_run(p, 'Gene signature derived from related VHFs rather than KFD-specific data, though justified by flavivirus phylogenetic similarity and conserved host responses demonstrated in tick-borne encephalitis.[30] Computational predictions require prospective clinical validation. Drug availability varies across Karnataka\'s healthcare tiers.[25]')
     
     # ==========================================
     # 5. CONCLUSIONS
