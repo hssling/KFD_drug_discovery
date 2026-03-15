@@ -1,0 +1,4 @@
+Dataset,Description,Platform,SevereSamples,NonSevereSamples,GenesTested,P_0.05_DEGs
+GSE18090,Brazilian PBMC cohort; DHF vs DF,GPL570,10,8,21755,2043
+GSE51808,Thai whole-blood cohort; DHF vs DF,GPL13158,10,18,21597,725
+GSE43777,Venezuelan PBMC longitudinal cohort; acute DHF vs DF,GPL570,37,39,21755,2196

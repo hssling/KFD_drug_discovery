@@ -1,0 +1,51 @@
+Gene,GeneSymbol,Pathway,Phase_Relevance,PubMed_Count,Druggability,Description,PathwayRaw,PhaseBucket,PathwayScore,PhaseScore,ReactomeModule,TractabilityScore
+Angiopoietin-2,ANGPT2,endothelial_barrier,Hemorrhagic,520,High,Vascular leak marker in VHF,endothelial,hemorrhagic,0.95,1.0,Cell junction organization / VEGFA-VEGFR2 pathway,1.0
+Angiopoietin-1,ANGPT1,endothelial_barrier,Protective,380,High,Endothelial stabilization,endothelial,protective,0.95,0.6,Cell junction organization / VEGFA-VEGFR2 pathway,1.0
+Von Willebrand Factor,VWF,endothelial_barrier,Hemorrhagic,410,Moderate,Endothelial damage marker,endothelial,hemorrhagic,0.95,1.0,Cell junction organization / VEGFA-VEGFR2 pathway,0.65
+Vascular Endothelial Growth Factor A,VEGFA,endothelial_barrier,Hemorrhagic,650,High,Vascular permeability,endothelial,hemorrhagic,0.95,1.0,Cell junction organization / VEGFA-VEGFR2 pathway,1.0
+TEK Receptor Tyrosine Kinase,TEK,endothelial_barrier,Protective,245,High,Tie2 receptor,endothelial,protective,0.95,0.6,Cell junction organization / VEGFA-VEGFR2 pathway,1.0
+Thrombomodulin,THBD,coagulation_fibrinolysis,Protective,280,Moderate,Anticoagulant,coagulation,protective,0.95,0.6,"Platelet activation, signaling and aggregation / Hemostasis",0.65
+Endothelial Protein C Receptor,PROCR,coagulation_fibrinolysis,Protective,190,Moderate,Activated protein C,coagulation,protective,0.95,0.6,"Platelet activation, signaling and aggregation / Hemostasis",0.65
+Endothelin-1,EDN1,endothelial_barrier,Hemorrhagic,320,High,Vasoconstrictor,endothelial,hemorrhagic,0.95,1.0,Cell junction organization / VEGFA-VEGFR2 pathway,1.0
+Endothelial Nitric Oxide Synthase,NOS3,endothelial_barrier,Protective,485,High,NO production,endothelial,protective,0.95,0.6,Cell junction organization / VEGFA-VEGFR2 pathway,1.0
+VEGF Receptor 2,KDR,endothelial_barrier,Hemorrhagic,380,High,VEGF signaling,endothelial,hemorrhagic,0.95,1.0,Cell junction organization / VEGFA-VEGFR2 pathway,1.0
+Tissue Factor,F3,coagulation_fibrinolysis,Hemorrhagic,380,High,DIC initiator,coagulation,hemorrhagic,0.95,1.0,"Platelet activation, signaling and aggregation / Hemostasis",1.0
+Plasminogen Activator Inhibitor-1,SERPINE1,coagulation_fibrinolysis,Hemorrhagic,420,Moderate,Fibrinolysis inhibitor,coagulation,hemorrhagic,0.95,1.0,"Platelet activation, signaling and aggregation / Hemostasis",0.65
+Tissue Plasminogen Activator,PLAT,coagulation_fibrinolysis,Both,285,High,Fibrinolysis,coagulation,both,0.95,0.75,"Platelet activation, signaling and aggregation / Hemostasis",1.0
+Tissue Factor Pathway Inhibitor,TFPI,coagulation_fibrinolysis,Protective,180,Moderate,Anticoagulant,coagulation,protective,0.95,0.6,"Platelet activation, signaling and aggregation / Hemostasis",0.65
+Protein S,PROS1,coagulation_fibrinolysis,Protective,145,Moderate,Anticoagulant cofactor,coagulation,protective,0.95,0.6,"Platelet activation, signaling and aggregation / Hemostasis",0.65
+Prothrombin,F2,coagulation_fibrinolysis,Hemorrhagic,320,High,Coagulation cascade,coagulation,hemorrhagic,0.95,1.0,"Platelet activation, signaling and aggregation / Hemostasis",1.0
+Fibrinogen Alpha,FGA,coagulation_fibrinolysis,Hemorrhagic,280,Moderate,Clot formation,coagulation,hemorrhagic,0.95,1.0,"Platelet activation, signaling and aggregation / Hemostasis",0.65
+Tumor Necrosis Factor,TNF,cytokine_signaling,Febrile,1250,High,Pro-inflammatory,cytokine,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+Interleukin-6,IL6,cytokine_signaling,Both,980,High,Acute phase response,cytokine,both,1.0,0.75,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+Interleukin-1 Beta,IL1B,cytokine_signaling,Febrile,720,High,Inflammasome effector,cytokine,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+Interferon Gamma,IFNG,cytokine_signaling,Febrile,650,High,Antiviral,cytokine,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+Interleukin-10,IL10,cytokine_signaling,Protective,485,High,Anti-inflammatory,cytokine,protective,1.0,0.6,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+C-C Motif Chemokine Ligand 2,CCL2,cytokine_signaling,Hemorrhagic,380,Moderate,Monocyte recruitment,cytokine,hemorrhagic,1.0,1.0,Cytokine Signaling in Immune system / Interferon Signaling,0.65
+C-X-C Motif Chemokine Ligand 10,CXCL10,cytokine_signaling,Febrile,420,Moderate,T cell recruitment,cytokine,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,0.65
+Interleukin-8,IL8,cytokine_signaling,Hemorrhagic,520,Moderate,Neutrophil chemotaxis,cytokine,hemorrhagic,1.0,1.0,Cytokine Signaling in Immune system / Interferon Signaling,0.65
+Integrin Alpha-IIb,ITGA2B,platelet_activation,Hemorrhagic,285,Moderate,Platelet aggregation,platelet,hemorrhagic,0.9,1.0,"Platelet activation, signaling and aggregation",0.65
+Integrin Beta-3,ITGB3,platelet_activation,Hemorrhagic,320,Moderate,Platelet aggregation,platelet,hemorrhagic,0.9,1.0,"Platelet activation, signaling and aggregation",0.65
+Glycoprotein Ib Alpha,GP1BA,platelet_activation,Hemorrhagic,180,Moderate,Platelet adhesion,platelet,hemorrhagic,0.9,1.0,"Platelet activation, signaling and aggregation",0.65
+Platelet Factor 4,PF4,platelet_activation,Hemorrhagic,245,Moderate,Megakaryocyte-derived,platelet,hemorrhagic,0.9,1.0,"Platelet activation, signaling and aggregation",0.65
+Pro-Platelet Basic Protein,PPBP,platelet_activation,Hemorrhagic,145,Low,Platelet chemokine,platelet,hemorrhagic,0.9,1.0,"Platelet activation, signaling and aggregation",0.2
+P-Selectin,SELP,platelet_activation,Hemorrhagic,280,High,Platelet-endothelial,platelet,hemorrhagic,0.9,1.0,"Platelet activation, signaling and aggregation",1.0
+Interferon Alpha 1,IFNA1,cytokine_signaling,Febrile,485,High,Type I IFN,interferon,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+Interferon Beta 1,IFNB1,cytokine_signaling,Febrile,420,High,Type I IFN antiviral,interferon,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+2'-5'-Oligoadenylate Synthetase 1,OAS1,cytokine_signaling,Febrile,380,Moderate,ISG antiviral,interferon,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,0.65
+MX Dynamin Like GTPase 1,MX1,cytokine_signaling,Febrile,320,Moderate,Antiviral effector,interferon,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,0.65
+ISG15 Ubiquitin Like Modifier,ISG15,cytokine_signaling,Febrile,285,Moderate,ISG antiviral,interferon,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,0.65
+Interferon Regulatory Factor 7,IRF7,cytokine_signaling,Febrile,245,Moderate,IFN transcription,interferon,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,0.65
+Signal Transducer and Activator 1,STAT1,cytokine_signaling,Febrile,520,High,IFN signaling,interferon,febrile,1.0,0.85,Cytokine Signaling in Immune system / Interferon Signaling,1.0
+Claudin-5,CLDN5,neurological_barrier,Neurological,180,Moderate,BBB tight junction,neurological,neurological,0.75,0.75,Neuronal System / Tight junction interactions,0.65
+Occludin,OCLN,neurological_barrier,Neurological,145,Moderate,BBB integrity,neurological,neurological,0.75,0.75,Neuronal System / Tight junction interactions,0.65
+Tight Junction Protein 1,TJP1,neurological_barrier,Neurological,180,Moderate,ZO-1 BBB,neurological,neurological,0.75,0.75,Neuronal System / Tight junction interactions,0.65
+Aquaporin 4,AQP4,neurological_barrier,Neurological,245,Moderate,Brain edema,neurological,neurological,0.75,0.75,Neuronal System / Tight junction interactions,0.65
+Brain Derived Neurotrophic Factor,BDNF,neurological_barrier,Neurological,420,High,Neuroprotection,neurological,neurological,0.75,0.75,Neuronal System / Tight junction interactions,1.0
+Nerve Growth Factor,NGF,neurological_barrier,Neurological,380,High,Neurotrophin,neurological,neurological,0.75,0.75,Neuronal System / Tight junction interactions,1.0
+Heme Oxygenase-1,HMOX1,oxidative_stress,Protective,520,High,Oxidative stress,oxidative,protective,0.8,0.6,Cellular responses to stress,1.0
+Superoxide Dismutase 2,SOD2,oxidative_stress,Protective,380,Moderate,Antioxidant,oxidative,protective,0.8,0.6,Cellular responses to stress,0.65
+Nuclear Factor Erythroid 2 Like 2,NFE2L2,oxidative_stress,Protective,420,High,Master antioxidant,oxidative,protective,0.8,0.6,Cellular responses to stress,1.0
+NAD(P)H Quinone Dehydrogenase 1,NQO1,oxidative_stress,Protective,180,Moderate,Detoxification,oxidative,protective,0.8,0.6,Cellular responses to stress,0.65
+Glutathione Peroxidase 1,GPX1,oxidative_stress,Protective,245,Moderate,Glutathione metabolism,oxidative,protective,0.8,0.6,Cellular responses to stress,0.65
+Erythropoietin,EPO,neurological_barrier,Neurological,580,High,Neuroprotectant,neuroprotection,neurological,0.75,0.75,Neuronal System / Tight junction interactions,1.0

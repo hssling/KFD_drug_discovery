@@ -1,0 +1,10 @@
+GeneSymbol,PriorityRank,Candidate,EvidenceTier,Rationale,Pathway
+F3,10,Fresh frozen plasma / coagulation monitoring,supportive,"Pathway-level supportive strategy, not direct blockade",coagulation_fibrinolysis
+VWF,13,Fresh frozen plasma / platelet support,supportive,Supportive care rather than target-specific inhibition,endothelial_barrier
+SERPINE1,15,Tranexamic acid,supportive,Hypothesis-generating bleeding-control adjunct aligned to fibrinolysis imbalance,coagulation_fibrinolysis
+IL1B,1,Anakinra,moderate,Target-matched anti-inflammatory biologic; specialist or research setting only,cytokine_signaling
+IL6,3,Tocilizumab,moderate,Target-matched anti-inflammatory biologic; specialist or research setting only,cytokine_signaling
+TNF,4,Pentoxifylline,moderate,Indirect TNF-modulating repurposing candidate,cytokine_signaling
+ANGPT2,8,Atorvastatin,moderate,Mechanistic endothelial-stabilization hypothesis rather than direct antagonism,endothelial_barrier
+HMOX1,12,N-acetylcysteine,moderate,Redox-modulating adjunct hypothesis,oxidative_stress
+CXCL10,2,No direct low-cost repurposed agent,low,Biomarker-priority target rather than immediate repurposing candidate,cytokine_signaling

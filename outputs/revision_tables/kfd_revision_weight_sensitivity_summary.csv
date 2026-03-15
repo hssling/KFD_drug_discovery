@@ -1,0 +1,3 @@
+Comparison,SpearmanRho,PValue
+base_vs_equal_weight,0.8645858343337334,5.933036360845208e-16
+base_vs_omics_heavy,0.9611044417767106,1.7913901882555143e-28
