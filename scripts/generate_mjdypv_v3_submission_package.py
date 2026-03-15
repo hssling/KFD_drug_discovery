@@ -232,7 +232,7 @@ def generate_final_submission_figures() -> list[tuple[Path, str]]:
     ]
 
 
-def build_blinded_manuscript() -> tuple[Path, int, int]:
+def build_blinded_manuscript() -> tuple[Path, int, int, int]:
     meta = pd.read_csv(V2_TABLES / "kfd_enhanced_v2_meta_targets.csv")
     transl = pd.read_csv(V2_TABLES / "kfd_enhanced_v2_translational_targets.csv")
     cohorts = pd.read_csv(REV_TABLES / "cohort_summary.csv")
@@ -455,28 +455,46 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
     doc.save(out)
     text = "\n".join(p.text for p in doc.paragraphs)
     abstract_text = " ".join(f"{a} {b}" for a, b in abstract_sections)
-    return out, word_count(text), word_count(abstract_text)
+    body_parts = []
+    in_body = False
+    for para in doc.paragraphs:
+        value = para.text.strip()
+        if not value:
+            continue
+        if value == "INTRODUCTION":
+            in_body = True
+        if value == "REFERENCES":
+            break
+        if in_body and not value.startswith("Table ") and not value.startswith("Figure "):
+            body_parts.append(value)
+    return out, word_count(text), word_count(abstract_text), word_count(" ".join(body_parts))
 
 
-def build_title_page(total_words: int, abstract_words: int) -> Path:
+def build_title_page(total_words: int, abstract_words: int, body_words: int) -> Path:
     doc = Document()
     set_margins(doc)
     set_base_style(doc)
-    fields = [
+    entries = [
         ("Article Type", "Original Article"),
         ("Title", TITLE),
         ("Running Title", RUNNING_TITLE),
-        ("Author", "Siddalingaiah H S"),
-        ("Affiliation", "Department of Community Medicine, Shridevi Institute of Medical Sciences and Research Hospital, Tumkur, Karnataka, India"),
-        ("Corresponding Author", "Dr. Siddalingaiah H S, MD; hssling@yahoo.com; +91-8941087719; ORCID 0000-0002-4771-8285"),
-        ("Word Count", f"Abstract {abstract_words}; total manuscript text including references approximately {total_words}"),
-        ("Tables/Figures", "3 tables and 4 figures in the blinded article; supplementary material provided separately"),
-        ("Funding", "None"),
+        ("Author(s)", "Siddalingaiah H S"),
+        ("Affiliation(s)", "Professor, Department of Community Medicine, Shridevi Institute of Medical Sciences and Research Hospital, Tumkur, Karnataka, India"),
+        ("Corresponding Author", "Dr. Siddalingaiah H S, MD; Professor, Department of Community Medicine; Shridevi Institute of Medical Sciences and Research Hospital, Tumkur, Karnataka, India; Email: hssling@yahoo.com; Phone: +91-8941087719; ORCID: 0000-0002-4771-8285"),
+        ("Word Counts", f"Abstract: {abstract_words} words; Main text (excluding abstract, references, tables, and figure captions): approximately {body_words} words; Total manuscript text including references: approximately {total_words} words"),
+        ("Tables", "3"),
+        ("Figures", "4"),
+        ("References", str(len(references()))),
+        ("Source of Support", "None"),
+        ("Acknowledgements", "The author acknowledges NCBI GEO, Reactome, and ChEMBL for publicly available data resources used in this study."),
         ("Conflicts of Interest", "None declared"),
-        ("Ethics Statement", "Secondary analysis of publicly available de-identified datasets; ethics approval not required"),
-        ("Study Note", "Transcriptomic prioritization framework with random-effects meta-analysis and uncertainty grading"),
+        ("Author Contributions", "SHS: concept, study design, literature review, data acquisition, data analysis, statistical interpretation, manuscript drafting, revision, and final approval. SHS is the guarantor of this work."),
+        ("AI Usage Disclosure", "Generative AI tools were used to assist with code development, workflow refinement, and language editing during manuscript preparation. All outputs were reviewed, validated, and edited by the author, who takes full responsibility for the scientific content and accuracy of the manuscript."),
+        ("Ethics Statement", "This study used only publicly available, de-identified transcriptomic datasets and derived summary analyses. No human participants were enrolled directly, and institutional ethics committee approval was not required for secondary analysis of public databases."),
+        ("Prior Presentation", "None"),
+        ("Originality Statement", "This manuscript has not been published previously, is not under consideration elsewhere, and has been reviewed and approved for submission by the author."),
     ]
-    for label, value in fields:
+    for label, value in entries:
         p = doc.add_paragraph()
         p.add_run(f"{label}: ").bold = True
         p.add_run(value)
@@ -680,8 +698,8 @@ def build_supplementary() -> Path:
 
 def main() -> None:
     generate_final_submission_figures()
-    manuscript, total_words, abstract_words = build_blinded_manuscript()
-    title = build_title_page(total_words, abstract_words)
+    manuscript, total_words, abstract_words, body_words = build_blinded_manuscript()
+    title = build_title_page(total_words, abstract_words, body_words)
     cover = build_cover_letter()
     response = build_response_letter()
     supp = build_supplementary()
