@@ -1,4 +1,4 @@
-"""Generate a submission-ready v3 package for MJDYPV."""
+"""Generate the final submission package for MJDYPV."""
 
 from __future__ import annotations
 
@@ -106,7 +106,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         ("Objectives:", "To strengthen a transcriptomic prioritization framework for KFD by adding pooled effect estimates, confidence intervals, heterogeneity metrics, and stricter evidence grading."),
         ("Materials and Methods:", f"We reanalyzed three public dengue severity cohorts from GEO (GSE18090, GSE43777, GSE51808; {total} acute samples, {severe} severe and {non_severe} non-severe). A prespecified 50-gene host-response panel was scored using a deterministic framework and then supplemented with random-effects meta-analysis, 95% confidence intervals, and evidence-tier classification."),
         ("Results:", f"The strongest transcriptomic evidence remained inflammatory. No gene reached a strict cross-cohort evidence tier; {single} genes had single-cohort nominal support and {mech} remained mechanistic-only. The highest meta-priority genes were CXCL10, IL6, STAT1, IFNB1, and TEK. Endothelial/coagulation genes such as ANGPT2, F3, VWF, and SERPINE1 remained biologically relevant but weakly supported transcriptomically."),
-        ("Conclusions:", "The submission-ready v3 framing separates transcriptomic evidence from mechanistic plausibility. Inflammatory targets are the best-supported findings in current public data, while endothelial and coagulation pathways remain clinically relevant KFD hypotheses that require KFD-specific validation before therapeutic inference."),
+        ("Conclusions:", "This framing separates transcriptomic evidence from mechanistic plausibility. Inflammatory targets are the best-supported findings in current public data, while endothelial and coagulation pathways remain clinically relevant KFD hypotheses that require KFD-specific validation before therapeutic inference."),
     ]
     for label, text in abstract_sections:
         p = doc.add_paragraph()
@@ -120,7 +120,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
     doc.add_heading("INTRODUCTION", level=1)
     for text in [
         "Kyasanur Forest Disease (KFD) remains a clinically important tick-borne flaviviral hemorrhagic fever in southern India, with no specific antiviral therapy and incomplete vaccine protection.[1-5]",
-        "Our prior revision replaced an unsupported multi-omics claim with a transparent transcriptomic prioritization framework. The present submission-ready v3 version adds a stricter evidence layer because mechanistic plausibility alone is insufficient for strong translational inference.",
+        "Our revision replaced an unsupported multi-omics claim with a transparent transcriptomic prioritization framework and adds a stricter evidence layer because mechanistic plausibility alone is insufficient for strong translational inference.",
         "Public KFD transcriptomes are unavailable, so we used human dengue severity cohorts as a cross-flaviviral proxy. This is biologically justifiable for vascular-leak and inflammatory hypotheses, but it requires explicit caution about uncertainty and transferability.[8-17]",
     ]:
         doc.add_paragraph(text)
@@ -139,7 +139,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         f"No gene reached the strict cross-cohort tier. {single} genes met single-cohort nominal support, and {mech} genes remained mechanistic-only. This demonstrates that the current public proxy data are more suitable for cautious prioritization than for claiming a stable cross-flaviviral consensus signature.",
         "The best-supported transcriptomic signals were inflammatory and interferon-related. CXCL10, IL6, STAT1, and IFNB1 occupied the highest meta-priority ranks, although several retained wide confidence intervals or moderate-to-high heterogeneity.",
         "Endothelial and coagulation targets remained important from a KFD pathophysiology standpoint, but their evidence tier was weaker. ANGPT2 and VWF were mechanistic-only, while SERPINE1 retained only single-cohort support. F3 remained biologically relevant but did not achieve nominal recurrence under the current data.",
-        "Accordingly, the v3 shortlist should be interpreted as a two-layer output: transcriptomically supported inflammatory targets and clinically motivated vascular/coagulation hypotheses.",
+        "Accordingly, the shortlist should be interpreted as a two-layer output: transcriptomically supported inflammatory targets and clinically motivated vascular/coagulation hypotheses.",
     ]:
         doc.add_paragraph(text)
 
@@ -187,7 +187,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
 
     shortlist = revision_drugs[revision_drugs["GeneSymbol"].isin(["IL1B", "IL6", "TNF", "ANGPT2", "SERPINE1", "HMOX1", "F3", "VWF"])].copy()
     p = doc.add_paragraph()
-    p.add_run("Table 3. Hypothesis-generating intervention shortlist under the v3 evidence framework.").bold = True
+    p.add_run("Table 3. Hypothesis-generating intervention shortlist under the final evidence framework.").bold = True
     t3 = doc.add_table(rows=len(shortlist) + 1, cols=5)
     t3.style = "Table Grid"
     h3 = ["Candidate", "Target", "Pathway", "Evidence tier", "Use in manuscript"]
@@ -216,7 +216,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
 
     doc.add_heading("DISCUSSION", level=1)
     for text in [
-        "The v3 manuscript is more robust because it cleanly separates two concepts that are often merged in computational repurposing studies: transcriptomic support and mechanistic plausibility. In the current public proxy data, inflammatory genes are the best-supported findings.",
+        "This manuscript is more robust because it cleanly separates two concepts that are often merged in computational repurposing studies: transcriptomic support and mechanistic plausibility. In the current public proxy data, inflammatory genes are the best-supported findings.",
         "Endothelial and coagulation pathways remain clinically important for KFD, but in this manuscript they are deliberately framed as mechanistic hypotheses rather than transcriptomically validated drivers. That narrower interpretation is more scientifically reliable and more likely to survive critical review.",
         "The intervention shortlist is therefore retained only as a staged translational hypothesis set. Plasma or platelet support reflects standard supportive care, while tranexamic acid, atorvastatin, and N-acetylcysteine remain candidates for future evaluation rather than recommendations for routine use.",
     ]:
@@ -229,7 +229,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
 
     doc.add_heading("CONCLUSIONS", level=1)
     doc.add_paragraph(
-        "This submission-ready v3 version is the most statistically explicit and scientifically cautious iteration currently possible from existing assets. Inflammatory targets have the strongest transcriptomic support, whereas endothelial and coagulation pathways remain clinically meaningful but mechanistic KFD hypotheses requiring disease-specific validation."
+        "This version is the most statistically explicit and scientifically cautious iteration currently possible from existing assets. Inflammatory targets have the strongest transcriptomic support, whereas endothelial and coagulation pathways remain clinically meaningful but mechanistic KFD hypotheses requiring disease-specific validation."
     )
 
     doc.add_page_break()
@@ -241,7 +241,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         p.paragraph_format.first_line_indent = Inches(-0.25)
         p.paragraph_format.left_indent = Inches(0.25)
 
-    out = MANUSCRIPT_DIR / "Manuscript_KFD_MJDYPV_v3_Submission_Blinded.docx"
+    out = MANUSCRIPT_DIR / "Manuscript_KFD_MJDYPV_Final_Blinded.docx"
     doc.save(out)
     text = "\n".join(p.text for p in doc.paragraphs)
     abstract_text = " ".join(f"{a} {b}" for a, b in abstract_sections)
@@ -264,13 +264,13 @@ def build_title_page(total_words: int, abstract_words: int) -> Path:
         ("Funding", "None"),
         ("Conflicts of Interest", "None declared"),
         ("Ethics Statement", "Secondary analysis of publicly available de-identified datasets; ethics approval not required"),
-        ("Version Note", "Submission-ready v3 package integrates meta-analysis/uncertainty layer"),
+        ("Revision Note", "Final submission package integrates transcriptomic prioritization with meta-analysis and uncertainty grading"),
     ]
     for label, value in fields:
         p = doc.add_paragraph()
         p.add_run(f"{label}: ").bold = True
         p.add_run(value)
-    out = MANUSCRIPT_DIR / "TitlePage_KFD_MJDYPV_v3_Submission.docx"
+    out = MANUSCRIPT_DIR / "TitlePage_KFD_MJDYPV_Final.docx"
     doc.save(out)
     return out
 
@@ -286,7 +286,7 @@ def build_cover_letter() -> Path:
     doc.add_paragraph()
     body = [
         f"We submit the enclosed manuscript entitled '{TITLE}' as an original article.",
-        "This version was prepared after a further critical audit of the revised submission. It retains the deterministic transcriptomic prioritization framework but adds a stricter statistical layer, including random-effects meta-analysis, confidence intervals, heterogeneity metrics, and explicit evidence-tier grading.",
+        "The revised manuscript retains the deterministic transcriptomic prioritization framework and adds a stricter statistical layer, including random-effects meta-analysis, confidence intervals, heterogeneity metrics, and explicit evidence-tier grading.",
         "The key value of the current submission is its improved scientific restraint. The manuscript now distinguishes transcriptomically supported inflammatory findings from endothelial and coagulation hypotheses that remain clinically relevant but mechanistically prioritized under uncertainty.",
         "A point-by-point response table and supplementary materials are included. The manuscript is not under consideration elsewhere. No conflicts of interest or external funding apply.",
     ]
@@ -296,36 +296,36 @@ def build_cover_letter() -> Path:
     doc.add_paragraph("Sincerely,")
     doc.add_paragraph()
     doc.add_paragraph("Dr. Siddalingaiah H S")
-    out = MANUSCRIPT_DIR / "CoverLetter_KFD_MJDYPV_v3_Submission.docx"
+    out = MANUSCRIPT_DIR / "CoverLetter_KFD_MJDYPV_Final.docx"
     doc.save(out)
     return out
 
 
 def build_response_letter() -> Path:
     rows = [
-        ("1. Methodology transparency was insufficient.", "Further strengthened. In addition to the prior deterministic workflow, the v3 package now adds pooled effect estimates, confidence intervals, heterogeneity metrics, and explicit evidence-tier grading for each prioritized target.", "Methods; Supplementary Tables S2-S4"),
-        ("2. Gene signature derivation appeared arbitrary.", "The panel remains prespecified and is no longer described as a de novo KFD discovery signature. v3 improves rigor by explicitly separating panel-based mechanistic prioritization from transcriptomic evidence strength.", "Abstract, Methods, Discussion"),
-        ("3. Composite score needed clearer definition.", "Already addressed in the revised submission and retained here. v3 adds an orthogonal meta-analysis layer so that ranking does not depend only on the composite score.", "Methods; Supplementary Tables"),
-        ("4. The original multi-omics framing was overstated.", "Retained correction. The v3 package continues to describe the work as a transcriptomic evidence and mechanistic prioritization framework.", "Title, Abstract, Introduction"),
-        ("5. Results and interpretation were inconsistent.", "Further corrected. v3 explicitly states that inflammatory targets have the strongest transcriptomic support, while endothelial/coagulation findings are mechanistic-priority hypotheses with weaker transcriptomic support.", "Results, Discussion, Conclusions"),
-        ("6. Clinical recommendations were premature.", "Strengthened correction. The intervention table now labels all candidates as hypothesis-generating only and distinguishes standard supportive care from exploratory repurposing concepts.", "Table 3, Discussion"),
-        ("7. Cross-virus extrapolation required stronger justification.", "v3 keeps the narrowed dengue-only discovery base and adds an uncertainty framework showing that current proxy datasets are insufficient for strong KFD-specific molecular claims.", "Introduction, Methods, Limitations"),
-        ("8. Pathway classification required support.", "Retained from the revised package. Reactome-supported pathway mapping remains documented in the methods and supplementary file.", "Methods; Supplementary"),
-        ("9. Tables/figures needed closer agreement with claims.", "v3 was built directly from regenerated outputs and audited against the source CSV files. The final text mirrors the evidence-tier summaries and meta-analysis tables.", "All tables and figures"),
-        ("10. Limitations required more emphasis.", "Further strengthened. v3 explicitly states that no gene reached strict cross-cohort support under the current public data base, which narrows the strongest conclusions and clarifies what still requires KFD-specific validation.", "Abstract, Results, Limitations"),
+        ("1. Methodology transparency was insufficient.", "We rebuilt the computational workflow to make each analytical step explicit. The manuscript now describes cohort selection, preprocessing, probe-to-gene collapsing, within-cohort differential-expression analysis, the prespecified 50-gene host-response panel, the deterministic prioritization formula, and the added random-effects meta-analysis with confidence intervals and heterogeneity metrics.", "Methods; Supplementary Tables S1-S4"),
+        ("2. Gene signature derivation appeared arbitrary.", "We clarified that the 50 genes are not presented as a de novo KFD-specific discovery signature. Instead, they constitute a prespecified mechanistic host-response panel spanning cytokine, endothelial, coagulation, platelet, neurological, and oxidative-stress biology. The manuscript now separates panel construction from transcriptomic evidence strength.", "Abstract, Methods, Discussion, Supplementary Table S2"),
+        ("3. Composite score needed clearer definition.", "We retained the explicit deterministic prioritization framework and further strengthened it by adding an orthogonal random-effects meta-analysis layer. This allows readers to distinguish mechanistic prioritization from pooled transcriptomic evidence and uncertainty.", "Methods; Results; Supplementary Tables S2-S4"),
+        ("4. The original multi-omics framing was overstated.", "We removed the unsupported multi-omics framing throughout and now describe the study as a cross-flaviviral transcriptomic evidence and mechanistic prioritization framework.", "Title, Abstract, Introduction, Conclusions"),
+        ("5. Results and interpretation were inconsistent.", "We reconciled the narrative with the underlying data. The final manuscript states that inflammatory targets have the strongest transcriptomic support, while endothelial and coagulation targets remain clinically meaningful but mechanistic hypotheses with weaker transcriptomic backing in the current datasets.", "Results, Discussion, Conclusions, Tables 1-3"),
+        ("6. Clinical recommendations were premature.", "We removed directive therapeutic language. The intervention shortlist is now explicitly labeled hypothesis-generating only, and supportive-care products are distinguished from exploratory repurposing candidates.", "Abstract, Table 3, Discussion, Conclusions"),
+        ("7. Cross-virus extrapolation required stronger justification.", "We narrowed the public discovery base to human dengue severity cohorts and added an explicit uncertainty framework. The manuscript now states clearly that current proxy datasets are insufficient for strong KFD-specific molecular claims and that disease-specific validation remains necessary.", "Introduction, Methods, Limitations, Conclusions"),
+        ("8. Pathway classification required support.", "We retained pathway mapping grounded in established host-response biology and documented the categorized panel transparently in the manuscript and supplementary materials.", "Methods; Supplementary Table S2"),
+        ("9. Tables and figures needed closer agreement with claims.", "All tables and figures were regenerated directly from verified output files and re-audited against the manuscript text. Table captions, figure captions, and narrative claims now align with the evidence-tier summaries and pooled effect tables.", "Tables 1-3; Figures 1-4; Supplementary Tables"),
+        ("10. Limitations required more emphasis.", "We expanded the limitations substantially. The manuscript now states that no gene reached strict cross-cohort support under the current public data base, that several vascular/coagulation targets are mechanistic rather than recurrent transcriptomic findings, and that KFD-specific data are still required for validation.", "Abstract, Results, Limitations, Conclusions"),
     ]
     doc = Document()
     set_margins(doc)
     set_base_style(doc, size=11, spacing=1.5)
     h = doc.add_heading("", level=0)
-    r = h.add_run("Response to Reviewers and Final Revision Notes")
+    r = h.add_run("Response to Reviewers")
     r.bold = True
     r.font.size = Pt(14)
     h.alignment = WD_ALIGN_PARAGRAPH.CENTER
     doc.add_paragraph("Manuscript title: " + TITLE)
     table = doc.add_table(rows=len(rows) + 1, cols=3)
     table.style = "Table Grid"
-    headers = ["Reviewer Concern", "Response in Submission-Ready v3", "Location"]
+    headers = ["Reviewer Concern", "Response", "Location in Revised Manuscript"]
     for i, h in enumerate(headers):
         cell = table.rows[0].cells[i]
         cell.text = h
@@ -334,7 +334,7 @@ def build_response_letter() -> Path:
     for i, row in enumerate(rows, start=1):
         for j, value in enumerate(row):
             table.rows[i].cells[j].text = value
-    out = MANUSCRIPT_DIR / "Response_to_Reviewers_KFD_MJDYPV_v3.docx"
+    out = MANUSCRIPT_DIR / "Response_to_Reviewers_KFD_MJDYPV_Final.docx"
     doc.save(out)
     return out
 
@@ -383,12 +383,12 @@ def build_supplementary() -> Path:
         doc.add_paragraph(text)
 
     add_df("Table S1. Discovery cohort summary", cohorts)
-    add_df("Table S2. Full v2 meta-analysis target table", meta)
+    add_df("Table S2. Full meta-analysis target table", meta)
     add_df("Table S3. Translational target subset", transl)
     add_df("Table S4. Evidence-tier summary by pathway", evidence)
     add_df("Table S5. Original revision ranking retained for comparison", revision_targets[["Rank", "GeneSymbol", "Pathway", "CompositeScore", "DatasetsSupporting"]])
 
-    out = MANUSCRIPT_DIR / "Supplementary_Materials_KFD_v3_Submission.docx"
+    out = MANUSCRIPT_DIR / "Supplementary_Materials_KFD_Final.docx"
     doc.save(out)
     return out
 
@@ -399,7 +399,7 @@ def main() -> None:
     cover = build_cover_letter()
     response = build_response_letter()
     supp = build_supplementary()
-    print("Generated submission-ready v3 package:")
+    print("Generated final submission package:")
     for file in [manuscript, title, cover, response, supp]:
         print(f" - {file.name}")
 
