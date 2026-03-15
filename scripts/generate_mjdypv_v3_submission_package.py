@@ -119,8 +119,8 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
 
     doc.add_heading("INTRODUCTION", level=1)
     for text in [
-        "Kyasanur Forest Disease (KFD) remains a clinically important tick-borne flaviviral hemorrhagic fever in southern India, with no specific antiviral therapy and incomplete vaccine protection.[1-5]",
-        "Our revision replaced an unsupported multi-omics claim with a transparent transcriptomic prioritization framework and adds a stricter evidence layer because mechanistic plausibility alone is insufficient for strong translational inference.",
+        "Kyasanur Forest Disease (KFD) remains a clinically important tick-borne flaviviral hemorrhagic fever in southern India, with no specific antiviral therapy and incomplete vaccine protection among forest-linked rural populations.[1-5,19]",
+        "Our revision replaced an unsupported multi-omics claim with a transparent transcriptomic prioritization framework and adds a stricter evidence layer because mechanistic plausibility alone is insufficient for strong translational inference in host-directed therapy research.[6,7]",
         "Public KFD transcriptomes are unavailable, so we used human dengue severity cohorts as a cross-flaviviral proxy. This is biologically justifiable for vascular-leak and inflammatory hypotheses, but it requires explicit caution about uncertainty and transferability.[8-17]",
     ]:
         doc.add_paragraph(text)
@@ -218,7 +218,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
     for text in [
         "This manuscript is more robust because it cleanly separates two concepts that are often merged in computational repurposing studies: transcriptomic support and mechanistic plausibility. In the current public proxy data, inflammatory genes are the best-supported findings.",
         "Endothelial and coagulation pathways remain clinically important for KFD, but in this manuscript they are deliberately framed as mechanistic hypotheses rather than transcriptomically validated drivers. That narrower interpretation is more scientifically reliable and more likely to survive critical review.",
-        "The intervention shortlist is therefore retained only as a staged translational hypothesis set. Plasma or platelet support reflects standard supportive care, while tranexamic acid, atorvastatin, and N-acetylcysteine remain candidates for future evaluation rather than recommendations for routine use.",
+        "The intervention shortlist is therefore retained only as a staged translational hypothesis set. Plasma or platelet support reflects standard supportive care, while tranexamic acid, atorvastatin, and N-acetylcysteine remain candidates for future evaluation rather than recommendations for routine use. For tranexamic acid in particular, the computational rationale should be interpreted in the context of broader hemorrhage literature rather than as direct evidence for KFD efficacy.[18]",
     ]:
         doc.add_paragraph(text)
 
