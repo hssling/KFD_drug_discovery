@@ -1,0 +1,16 @@
+Pathway,EvidenceTier,Targets
+coagulation,mechanistic-only,6
+coagulation,single-cohort,3
+cytokine,mechanistic-only,3
+cytokine,single-cohort,5
+endothelial,mechanistic-only,7
+endothelial,single-cohort,1
+interferon,mechanistic-only,4
+interferon,single-cohort,3
+neurological,mechanistic-only,5
+neurological,single-cohort,1
+neuroprotection,mechanistic-only,1
+oxidative,mechanistic-only,4
+oxidative,single-cohort,1
+platelet,mechanistic-only,5
+platelet,single-cohort,1
