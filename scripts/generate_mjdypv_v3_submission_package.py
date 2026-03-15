@@ -276,29 +276,77 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
 
     doc.add_heading("INTRODUCTION", level=1)
     for text in [
-        "Kyasanur Forest Disease (KFD) remains a clinically important tick-borne flaviviral hemorrhagic fever in southern India, with no specific antiviral therapy and incomplete vaccine protection among forest-linked rural populations.[1-5,19]",
-        "Our revision replaced an unsupported multi-omics claim with a transparent transcriptomic prioritization framework and adds a stricter evidence layer because mechanistic plausibility alone is insufficient for strong translational inference in host-directed therapy research.[6,7]",
-        "Public KFD transcriptomes are unavailable, so we used human dengue severity cohorts as a cross-flaviviral proxy. This is biologically justifiable for vascular-leak and inflammatory hypotheses, but it requires explicit caution about uncertainty and transferability.[8-17]",
+        "Kyasanur Forest Disease (KFD) is a tick-borne flaviviral hemorrhagic fever first recognized in Karnataka and remains an important clinical and public health problem in affected districts of southern India.[1-4] Patients can present with intense febrile illness, thrombocytopenia, bleeding manifestations, and in some cases neurological complications, yet no disease-specific antiviral treatment is available and vaccine protection remains incomplete in field conditions.[4,5]",
+        "This therapeutic gap makes host-directed therapy an attractive idea for KFD because the clinically important manifestations of severe disease are likely driven by host inflammatory, vascular, and hemostatic pathways rather than by viral replication alone.[6,7] At the same time, host-directed therapy studies are easy to overstate if biological plausibility is treated as equivalent to reproducible molecular evidence.",
+        "A major limitation in KFD research is the absence of publicly available KFD-specific blood transcriptomic datasets. We therefore used severe-versus-non-severe human dengue cohorts as a cross-flaviviral proxy because they provide the most accessible human transcriptomic data linked to severe disease, vascular leak, and hemorrhagic manifestations among related flaviviral infections.[8-11] This strategy is biologically reasonable for hypothesis generation, but it requires explicit caution because host responses vary across viruses, tissues, and stages of disease.",
+        "The aim of this revised manuscript was not to claim a KFD-specific discovery signature. Instead, we evaluated a prespecified 50-gene host-response panel mapped to biologically relevant modules using Reactome-informed pathway categories and then added a random-effects meta-analytic layer to quantify pooled effect size, uncertainty, and heterogeneity.[12] The purpose was to distinguish transcriptomically supported priorities from clinically important mechanistic hypotheses and to present the resulting intervention shortlist with appropriate restraint.",
     ]:
         p = doc.add_paragraph()
         add_formatted_run(p, text)
 
     doc.add_heading("MATERIALS AND METHODS", level=1)
+    doc.add_heading("Data sources and cohort selection", level=2)
     for text in [
-        f"Three GEO cohorts with acute severe-versus-non-severe dengue data were included: GSE18090, GSE43777, and GSE51808, totaling {total} acute samples ({severe} severe and {non_severe} non-severe). Preprocessing, probe collapsing, and within-cohort differential-expression analysis followed the previously revised deterministic workflow.",
-        "The prespecified 50-gene panel covered cytokine, interferon, endothelial, coagulation, platelet, neurological, and oxidative-stress biology. Existing component scores were retained for mechanistic prioritization.",
-        "To strengthen statistical rigor, each panel gene was additionally evaluated using random-effects meta-analysis based on cohort-level effect sizes and approximated standard errors derived from log2 fold-changes and two-sided P values. We report pooled effects, 95% confidence intervals, and heterogeneity statistics.",
-        "Evidence tiers were defined as cross-cohort, single-cohort, or mechanistic-only to distinguish recurrent transcriptomic support from pathway-driven mechanistic prioritization.",
+        f"Three public GEO datasets with acute human dengue samples and severe-versus-non-severe annotations were included: GSE18090, GSE43777, and GSE51808.[8-11] Together they contributed {total} acute samples, including {severe} severe and {non_severe} non-severe samples. Cohort composition is shown in Figure 1.",
+        "Only acute-phase samples were analyzed. We intentionally avoided pooled cross-platform normalization because the included cohorts differed in platform and specimen type. Instead, each dataset was processed within cohort, and only gene-level summary statistics were carried forward into the cross-cohort framework.",
+    ]:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+
+    doc.add_heading("Preprocessing and within-cohort analysis", level=2)
+    for text in [
+        "Series-matrix files and platform annotations were obtained from GEO.[8] Probe identifiers were mapped to gene symbols using platform annotation files, duplicate probes were collapsed conservatively to a single representative probe per gene, and expression values were log-transformed when required. This workflow was chosen to maximize transparency and reproducibility while minimizing additional modelling assumptions.",
+        "Within each cohort, severe and non-severe samples were compared at the gene level using two-sample statistical testing. For every prespecified gene, we retained the cohort-specific log2 fold-change, nominal P value, and false-discovery-rate adjusted P value. These cohort-specific results formed the basis of both the deterministic prioritization layer and the added meta-analysis.",
+    ]:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+
+    doc.add_heading("Prespecified host-response panel and deterministic prioritization", level=2)
+    for text in [
+        "The 50-gene panel was not treated as a de novo KFD discovery signature. Instead, it was defined as a mechanistic host-response panel spanning cytokine signaling, interferon biology, endothelial barrier regulation, coagulation and fibrinolysis, platelet activation, oxidative stress, and neurological or barrier-related pathways. Pathway grouping was anchored to Reactome-supported biological modules to improve biological consistency.[12]",
+        "We retained the deterministic prioritization framework from the earlier revision so that mechanistic and translational context would not be lost when the statistical layer was tightened. The deterministic score combined transcriptomic support, pathway relevance, disease-phase relevance, and tractability of host-directed modulation. Tractability was informed by the presence of plausible repurposing leads and by drug-discovery resources such as ChEMBL.[13]",
+    ]:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+
+    doc.add_heading("Meta-analysis and evidence-tier assignment", level=2)
+    for text in [
+        "To strengthen statistical rigor, each panel gene was additionally evaluated using random-effects meta-analysis based on cohort-level effect sizes and approximated standard errors derived from log2 fold-changes and two-sided P values. For each gene we report pooled effect size, 95% confidence interval, pooled P value, and heterogeneity measured as I-squared.",
+        "Genes were classified into three evidence tiers. Cross-cohort support required more than one nominally supporting cohort together with a significant pooled effect. Single-cohort support required one nominally supporting cohort. Mechanistic-only denotes genes retained because of biological relevance but lacking recurrent nominal transcriptomic support. This framework was designed to separate molecular evidence from pathway plausibility rather than merge them into a single unsupported claim.",
     ]:
         p = doc.add_paragraph()
         add_formatted_run(p, text)
 
     doc.add_heading("RESULTS", level=1)
+    doc.add_heading("Cohort composition and analytic context", level=2)
     for text in [
-        f"No gene reached the strict cross-cohort tier. {single} genes met single-cohort nominal support, and {mech} genes remained mechanistic-only. This demonstrates that the current public proxy data are more suitable for cautious prioritization than for claiming a stable cross-flaviviral consensus signature.",
-        "The best-supported transcriptomic signals were inflammatory and interferon-related. CXCL10, IL6, STAT1, and IFNB1 occupied the highest meta-priority ranks, although several retained wide confidence intervals or moderate-to-high heterogeneity.",
-        "Endothelial and coagulation targets remained important from a KFD pathophysiology standpoint, but their evidence tier was weaker. ANGPT2 and VWF were mechanistic-only, while SERPINE1 retained only single-cohort support. F3 remained biologically relevant but did not achieve nominal recurrence under the current data.",
-        "Accordingly, the shortlist should be interpreted as a two-layer output: transcriptomically supported inflammatory targets and clinically motivated vascular/coagulation hypotheses.",
+        f"The three cohorts were heterogeneous in sample source, geography, and severe-case representation, but all contributed severe-versus-non-severe information. GSE18090 included 10 severe and 8 non-severe PBMC samples, GSE51808 included 10 severe and 18 non-severe whole-blood samples, and GSE43777 included 37 severe and 39 non-severe PBMC samples. Figure 1 shows that GSE43777 contributed the largest share of analyzed samples.",
+        "Nominal differential-expression burden varied substantially across cohorts, indicating that the proxy data are informative but not uniform. This variability supports the decision to carry forward gene-level summary statistics rather than directly pool expression matrices across studies.",
+    ]:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+
+    doc.add_heading("Evidence-tier distribution and top-ranked genes", level=2)
+    for text in [
+        f"No gene reached the strict cross-cohort tier. {single} genes met the single-cohort tier and {mech} remained mechanistic-only after pooled evaluation. This is the most important empirical result of the revised study: current public proxy data can support cautious prioritization, but they do not justify claims of a stable cross-flaviviral KFD-like consensus signature.",
+        "The highest-ranked genes by the combined meta-priority framework were CXCL10, IL6, STAT1, IFNB1, and TEK (Table 1; Figure 2). These genes cluster mainly within inflammatory and interferon-related biology. However, the confidence intervals for several top-ranked genes remained wide and heterogeneity was often moderate to high, which is why the manuscript treats them as evidence-supported priorities rather than validated biomarkers.",
+        "Table 1 therefore serves two purposes. It identifies the strongest current targets under the final framework, and it makes visible the uncertainty attached to each rank. The table should not be interpreted as a fixed disease signature but as a transparent ranking of candidates under limited-data conditions.",
+    ]:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+
+    doc.add_heading("Pathway-level findings", level=2)
+    for text in [
+        "At the pathway level, cytokine signaling had the highest mean deterministic score, followed by coagulation/fibrinolysis and endothelial barrier biology. Figure 3 places those pathway-level tendencies in the context of pooled effect size and heterogeneity, and Figure 4 shows the original composite ranking retained for comparison with the final meta-priority hierarchy.",
+        "This pathway-level view resolves a key interpretive issue from earlier drafts. Inflammatory pathways carry the strongest transcriptomic signal in the available public data, whereas endothelial and hemostatic pathways remain prominent mainly because they are central to the known clinical pathophysiology of hemorrhagic disease and retain some degree of supporting signal, even if that signal is not sufficiently recurrent to support strong transcriptomic claims.",
+    ]:
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
+
+    doc.add_heading("Translationally relevant targets and intervention shortlist", level=2)
+    for text in [
+        "The translational subset is summarized in Table 2. IL6, TNF, IL1B, BDNF, and SERPINE1 retained single-cohort support under the final evidence framework, whereas ANGPT2, VWF, and F3 remained biologically important but fell into the mechanistic-only category. This pattern reinforces the central conclusion that mechanistic importance and transcriptomic recurrence are not interchangeable.",
+        "Table 3 presents the intervention shortlist as a hypothesis-generating output rather than a recommendation for use. The shortlist intentionally includes both supportive-care aligned strategies and exploratory host-directed candidates mapped to prioritized pathways. Interventions linked to inflammatory targets are currently better grounded in transcriptomic evidence, whereas endothelial and coagulation-directed options are retained because of disease plausibility and translational relevance rather than because the molecular evidence is already strong.",
     ]:
         p = doc.add_paragraph()
         add_formatted_run(p, text)
@@ -371,9 +419,11 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
 
     doc.add_heading("DISCUSSION", level=1)
     for text in [
-        "This manuscript is more robust because it cleanly separates two concepts that are often merged in computational repurposing studies: transcriptomic support and mechanistic plausibility. In the current public proxy data, inflammatory genes are the best-supported findings.",
-        "Endothelial and coagulation pathways remain clinically important for KFD, but in this manuscript they are deliberately framed as mechanistic hypotheses rather than transcriptomically validated drivers. That narrower interpretation is more scientifically reliable and more likely to survive critical review.",
-        "The intervention shortlist is therefore retained only as a staged translational hypothesis set. Plasma or platelet support reflects standard supportive care, while tranexamic acid, atorvastatin, and N-acetylcysteine remain candidates for future evaluation rather than recommendations for routine use. For tranexamic acid in particular, the computational rationale should be interpreted in the context of broader hemorrhage literature rather than as direct evidence for KFD efficacy.[18]",
+        "The principal strength of the revised manuscript is that it separates transcriptomic support from mechanistic plausibility instead of blending them into a single overconfident ranking. Once pooled effects, confidence intervals, and heterogeneity are considered together, inflammatory and interferon-related genes emerge as the most defensible priorities in the available proxy data.",
+        "That does not make endothelial and coagulation biology unimportant. On the contrary, these pathways remain highly relevant to how severe KFD is understood clinically. What changes in the revised manuscript is the level of certainty attached to them. ANGPT2, VWF, F3, and related genes are retained because they are mechanistically credible in hemorrhagic disease, but they are no longer described as though they were recurrent transcriptomic drivers in the current public datasets.[14-17]",
+        "This distinction matters for host-directed therapy research more broadly.[6,7] A pathway can be biologically attractive and clinically actionable in principle, yet still lack reproducible molecular support in currently available data. By making that boundary explicit, the manuscript becomes more reliable and more useful to readers who want to understand what is supported now and what still requires validation.",
+        "The intervention shortlist should therefore be read as a staged translational agenda. Supportive-care elements remain closest to current practice, while repurposing candidates such as atorvastatin, tranexamic acid, and N-acetylcysteine should be considered priorities for preclinical testing, biomarker-linked observational work, or carefully designed early clinical evaluation rather than routine use. For tranexamic acid in particular, the present rationale should be interpreted in the context of broader hemorrhage literature and not as direct efficacy evidence for KFD.[18]",
+        "The rural and forest-linked setting of KFD also remains relevant when considering translational usefulness. Any future intervention strategy has to be realistic for district-level care, delayed presentation, and healthcare-seeking patterns in endemic areas.[19] This practical dimension explains why low-cost interventions may still be worth discussing even when their supporting molecular evidence is weaker than that of inflammatory targets.",
     ]:
         p = doc.add_paragraph()
         add_formatted_run(p, text)
@@ -389,7 +439,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
     p = doc.add_paragraph()
     add_formatted_run(
         p,
-        "This version is the most statistically explicit and scientifically cautious iteration currently possible from existing assets. Inflammatory targets have the strongest transcriptomic support, whereas endothelial and coagulation pathways remain clinically meaningful but mechanistic KFD hypotheses requiring disease-specific validation.",
+        "A transparent transcriptomic prioritization framework can still be useful for KFD despite the absence of disease-specific transcriptomic datasets, but only if the outputs are interpreted with strict caution. In the current public proxy data, inflammatory targets have the strongest molecular support, whereas endothelial and coagulation pathways remain clinically meaningful mechanistic hypotheses that require KFD-specific validation before therapeutic inference.",
     )
 
     doc.add_page_break()
