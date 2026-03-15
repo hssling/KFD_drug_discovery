@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -18,6 +19,7 @@ REV_TABLES = BASE_DIR / "outputs" / "revision_tables"
 V2_TABLES = BASE_DIR / "outputs" / "enhanced_v2_tables"
 REV_FIGS = BASE_DIR / "outputs" / "revision_figures"
 V2_FIGS = BASE_DIR / "outputs" / "enhanced_v2_figures"
+FINAL_FIGS = BASE_DIR / "outputs" / "final_submission_figures"
 
 
 def set_margins(doc: Document) -> None:
@@ -42,6 +44,39 @@ def set_cell_shading(cell, color: str) -> None:
     tc_pr.append(shd)
 
 
+def add_formatted_run(paragraph, text: str) -> None:
+    parts = re.split(r"(\[\d+(?:[-,]\d+)*\])", text)
+    for part in parts:
+        if not part:
+            continue
+        run = paragraph.add_run(part)
+        if re.fullmatch(r"\[\d+(?:[-,]\d+)*\]", part):
+            run.font.superscript = True
+
+
+def clone_paragraph(dest_doc: Document, source_para) -> None:
+    new_para = dest_doc.add_paragraph()
+    if source_para.style is not None:
+        new_para.style = source_para.style
+    new_para.alignment = source_para.alignment
+    new_para.paragraph_format.left_indent = source_para.paragraph_format.left_indent
+    new_para.paragraph_format.right_indent = source_para.paragraph_format.right_indent
+    new_para.paragraph_format.first_line_indent = source_para.paragraph_format.first_line_indent
+    new_para.paragraph_format.space_before = source_para.paragraph_format.space_before
+    new_para.paragraph_format.space_after = source_para.paragraph_format.space_after
+    new_para.paragraph_format.line_spacing = source_para.paragraph_format.line_spacing
+    for run in source_para.runs:
+        new_run = new_para.add_run(run.text)
+        new_run.bold = run.bold
+        new_run.italic = run.italic
+        new_run.underline = run.underline
+        new_run.font.superscript = run.font.superscript
+        if run.font.name:
+            new_run.font.name = run.font.name
+        if run.font.size:
+            new_run.font.size = run.font.size
+
+
 def build_tables_after_references_variant() -> Path:
     source = Document(MANUSCRIPT_DIR / "Manuscript_KFD_MJDYPV_Final_Blinded.docx")
     meta = pd.read_csv(V2_TABLES / "kfd_enhanced_v2_meta_targets.csv")
@@ -56,7 +91,7 @@ def build_tables_after_references_variant() -> Path:
     for para in source.paragraphs:
         # Skip inline figure-only paragraphs; captions remain useful in text.
         if para.text.strip():
-            doc.add_paragraph(para.text)
+            clone_paragraph(doc, para)
 
     doc.add_page_break()
     doc.add_heading("TABLES", level=1)
@@ -136,10 +171,10 @@ def build_figures_docx() -> Path:
     doc.add_paragraph("A Cross-Flaviviral Transcriptomic Evidence and Mechanistic Prioritization Framework for Host-Directed Therapy in Kyasanur Forest Disease")
 
     figures = [
-        (REV_FIGS / "figure1_discovery_cohorts.png", "Figure 1. Discovery cohorts used in the analysis."),
-        (V2_FIGS / "figure_v2_meta_priority.png", "Figure 2. Meta-priority ranking after adding pooled effects and evidence tiers."),
-        (V2_FIGS / "figure_v2_pathway_heterogeneity.png", "Figure 3. Pathway effect size versus heterogeneity."),
-        (REV_FIGS / "figure2_target_ranking.png", "Figure 4. Original composite ranking retained for comparison with the meta-analytic ranking."),
+        (FINAL_FIGS / "figure1_submission.png", "Figure 1. Discovery cohorts used in the analysis."),
+        (FINAL_FIGS / "figure2_submission.png", "Figure 2. Meta-priority ranking after adding pooled effects and evidence tiers."),
+        (FINAL_FIGS / "figure3_submission.png", "Figure 3. Pathway effect size versus heterogeneity."),
+        (FINAL_FIGS / "figure4_submission.png", "Figure 4. Original composite ranking retained for comparison with the meta-analytic ranking."),
     ]
     for path, caption in figures:
         p = doc.add_paragraph()

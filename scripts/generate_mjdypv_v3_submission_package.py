@@ -6,7 +6,9 @@ import re
 from datetime import datetime
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
@@ -20,9 +22,12 @@ REV_TABLES = BASE_DIR / "outputs" / "revision_tables"
 V2_TABLES = BASE_DIR / "outputs" / "enhanced_v2_tables"
 REV_FIGS = BASE_DIR / "outputs" / "revision_figures"
 V2_FIGS = BASE_DIR / "outputs" / "enhanced_v2_figures"
+FINAL_FIGS = BASE_DIR / "outputs" / "final_submission_figures"
 
 TITLE = "A Cross-Flaviviral Transcriptomic Evidence and Mechanistic Prioritization Framework for Host-Directed Therapy in Kyasanur Forest Disease"
 RUNNING_TITLE = "Evidence-Based HDT Framework for KFD"
+
+FINAL_FIGS.mkdir(parents=True, exist_ok=True)
 
 
 def set_margins(doc: Document) -> None:
@@ -51,6 +56,16 @@ def word_count(text: str) -> int:
     return len(re.findall(r"\b\w+\b", text))
 
 
+def add_formatted_run(paragraph, text: str) -> None:
+    parts = re.split(r"(\[\d+(?:[-,]\d+)*\])", text)
+    for part in parts:
+        if not part:
+            continue
+        run = paragraph.add_run(part)
+        if re.fullmatch(r"\[\d+(?:[-,]\d+)*\]", part):
+            run.font.superscript = True
+
+
 def references() -> list[str]:
     return [
         "Work TH, Trapido H, Murthy DP, Rao RL, Bhatt PN, Kulkarni KG. Kyasanur forest disease. III. A preliminary report on the nature of the infection and clinical manifestations in man. Indian J Med Sci 1957;11:619-45.",
@@ -72,6 +87,148 @@ def references() -> list[str]:
         "Yacoub S, Wills B. Predicting outcome from dengue. BMC Med 2014;12:147.",
         "Roberts I, Shakur H, Coats T, Hunt B, Balogun E, Barnetson L, et al. The CRASH-2 trial: a randomised controlled trial and economic evaluation of the effects of tranexamic acid on death, vascular occlusive events and transfusion requirement in bleeding trauma patients. Health Technol Assess 2013;17:1-79.",
         "Kiran SK, Padamashree S, Jayashree K, Srinath S. Health-care-seeking behaviour among Kyasanur forest disease patients in Shivamogga district, Karnataka: a cross-sectional study. Indian J Community Med 2021;46:486-9.",
+    ]
+
+
+def prettify_pathway(value: str) -> str:
+    mapping = {
+        "cytokine": "Cytokine",
+        "coagulation": "Coagulation/fibrinolysis",
+        "endothelial": "Endothelial barrier",
+        "interferon": "Interferon",
+        "neurological": "Neurological",
+        "neuroprotection": "Neuroprotection",
+        "oxidative": "Oxidative stress",
+        "platelet": "Platelet activation",
+        "cytokine_signaling": "Cytokine signaling",
+        "coagulation_fibrinolysis": "Coagulation/fibrinolysis",
+        "endothelial_barrier": "Endothelial barrier",
+        "oxidative_stress": "Oxidative stress",
+        "platelet_activation": "Platelet activation",
+        "neurological_barrier": "Neurological barrier",
+        "monocyte_innate_activation": "Monocyte/innate activation",
+    }
+    return mapping.get(value, str(value).replace("_", " ").title())
+
+
+def generate_final_submission_figures() -> list[tuple[Path, str]]:
+    sns.set_theme(style="whitegrid")
+    cohorts = pd.read_csv(REV_TABLES / "cohort_summary.csv")
+    meta = pd.read_csv(V2_TABLES / "kfd_enhanced_v2_meta_targets.csv")
+    revision_targets = pd.read_csv(REV_TABLES / "kfd_revision_targets.csv")
+
+    counts = cohorts.melt(
+        id_vars=["Dataset"],
+        value_vars=["SevereSamples", "NonSevereSamples"],
+        var_name="Group",
+        value_name="Samples",
+    )
+    counts["Group"] = counts["Group"].map(
+        {"SevereSamples": "Severe", "NonSevereSamples": "Non-severe"}
+    )
+    fig, ax = plt.subplots(figsize=(8, 5))
+    sns.barplot(
+        data=counts,
+        x="Dataset",
+        y="Samples",
+        hue="Group",
+        ax=ax,
+        palette=["#9b1d20", "#2f6690"],
+    )
+    ax.set_title("Figure 1. Discovery cohorts used in the analysis.")
+    ax.set_xlabel("Dataset")
+    ax.set_ylabel("Sample count")
+    fig.tight_layout()
+    fig.savefig(FINAL_FIGS / "figure1_submission.png", dpi=300)
+    plt.close(fig)
+
+    top_meta = meta.head(15).copy()
+    top_meta["EvidenceTierLabel"] = top_meta["EvidenceTier"].map(
+        {
+            "single-cohort": "Single-cohort",
+            "mechanistic-only": "Mechanistic-only",
+            "cross-cohort": "Cross-cohort",
+        }
+    )
+    fig, ax = plt.subplots(figsize=(9, 6.5))
+    sns.barplot(
+        data=top_meta,
+        y="GeneSymbol",
+        x="MetaPriority",
+        hue="EvidenceTierLabel",
+        dodge=False,
+        palette={
+            "Cross-cohort": "#1b9e77",
+            "Single-cohort": "#4c78a8",
+            "Mechanistic-only": "#dd8452",
+        },
+        ax=ax,
+    )
+    ax.set_title("Figure 2. Meta-priority ranking after adding pooled effects and evidence tiers.")
+    ax.set_xlabel("Meta-priority score")
+    ax.set_ylabel("Gene")
+    ax.legend(title="Evidence tier", loc="lower right", fontsize=9)
+    fig.tight_layout()
+    fig.savefig(FINAL_FIGS / "figure2_submission.png", dpi=300)
+    plt.close(fig)
+
+    pathway = (
+        meta.groupby("Pathway")
+        .agg(
+            MeanAbsEffect=("AbsRandomEffect", "mean"),
+            MeanI2=("I2", "mean"),
+        )
+        .reset_index()
+    )
+    pathway["PathwayLabel"] = pathway["Pathway"].map(prettify_pathway)
+    fig, ax = plt.subplots(figsize=(8.2, 5.5))
+    sns.scatterplot(
+        data=pathway,
+        x="MeanAbsEffect",
+        y="MeanI2",
+        hue="PathwayLabel",
+        s=140,
+        ax=ax,
+    )
+    for _, row in pathway.iterrows():
+        ax.text(
+            row["MeanAbsEffect"] + 0.003,
+            row["MeanI2"] + 0.4,
+            row["PathwayLabel"],
+            fontsize=8,
+        )
+    ax.set_title("Figure 3. Pathway effect size versus heterogeneity.")
+    ax.set_xlabel("Mean absolute pooled effect")
+    ax.set_ylabel("Mean I-squared")
+    ax.legend(title="Pathway", bbox_to_anchor=(1.02, 1), loc="upper left", fontsize=8)
+    fig.tight_layout()
+    fig.savefig(FINAL_FIGS / "figure3_submission.png", dpi=300, bbox_inches="tight")
+    plt.close(fig)
+
+    top_revision = revision_targets.head(15).copy()
+    top_revision["PathwayLabel"] = top_revision["Pathway"].map(prettify_pathway)
+    fig, ax = plt.subplots(figsize=(9, 6.5))
+    sns.barplot(
+        data=top_revision,
+        y="GeneSymbol",
+        x="CompositeScore",
+        hue="PathwayLabel",
+        dodge=False,
+        ax=ax,
+    )
+    ax.set_title("Figure 4. Original composite ranking retained for comparison with the meta-analytic ranking.")
+    ax.set_xlabel("Composite priority score")
+    ax.set_ylabel("Gene")
+    ax.legend(title="Pathway", loc="lower right", fontsize=8)
+    fig.tight_layout()
+    fig.savefig(FINAL_FIGS / "figure4_submission.png", dpi=300)
+    plt.close(fig)
+
+    return [
+        (FINAL_FIGS / "figure1_submission.png", "Figure 1. Discovery cohorts used in the analysis."),
+        (FINAL_FIGS / "figure2_submission.png", "Figure 2. Meta-priority ranking after adding pooled effects and evidence tiers."),
+        (FINAL_FIGS / "figure3_submission.png", "Figure 3. Pathway effect size versus heterogeneity."),
+        (FINAL_FIGS / "figure4_submission.png", "Figure 4. Original composite ranking retained for comparison with the meta-analytic ranking."),
     ]
 
 
@@ -111,7 +268,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
     for label, text in abstract_sections:
         p = doc.add_paragraph()
         p.add_run(label).bold = True
-        p.add_run(" " + text)
+        add_formatted_run(p, " " + text)
     p = doc.add_paragraph()
     p.add_run("Keywords: ").bold = True
     p.add_run("Kyasanur Forest Disease; host-directed therapy; transcriptomics; meta-analysis; flavivirus; endothelial dysfunction; coagulation")
@@ -123,7 +280,8 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         "Our revision replaced an unsupported multi-omics claim with a transparent transcriptomic prioritization framework and adds a stricter evidence layer because mechanistic plausibility alone is insufficient for strong translational inference in host-directed therapy research.[6,7]",
         "Public KFD transcriptomes are unavailable, so we used human dengue severity cohorts as a cross-flaviviral proxy. This is biologically justifiable for vascular-leak and inflammatory hypotheses, but it requires explicit caution about uncertainty and transferability.[8-17]",
     ]:
-        doc.add_paragraph(text)
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
 
     doc.add_heading("MATERIALS AND METHODS", level=1)
     for text in [
@@ -132,7 +290,8 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         "To strengthen statistical rigor, each panel gene was additionally evaluated using random-effects meta-analysis based on cohort-level effect sizes and approximated standard errors derived from log2 fold-changes and two-sided P values. We report pooled effects, 95% confidence intervals, and heterogeneity statistics.",
         "Evidence tiers were defined as cross-cohort, single-cohort, or mechanistic-only to distinguish recurrent transcriptomic support from pathway-driven mechanistic prioritization.",
     ]:
-        doc.add_paragraph(text)
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
 
     doc.add_heading("RESULTS", level=1)
     for text in [
@@ -141,7 +300,8 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         "Endothelial and coagulation targets remained important from a KFD pathophysiology standpoint, but their evidence tier was weaker. ANGPT2 and VWF were mechanistic-only, while SERPINE1 retained only single-cohort support. F3 remained biologically relevant but did not achieve nominal recurrence under the current data.",
         "Accordingly, the shortlist should be interpreted as a two-layer output: transcriptomically supported inflammatory targets and clinically motivated vascular/coagulation hypotheses.",
     ]:
-        doc.add_paragraph(text)
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
 
     top_meta = meta.head(12).copy()
     p = doc.add_paragraph()
@@ -202,12 +362,7 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         for j, v in enumerate(vals):
             t3.rows[i].cells[j].text = str(v)
 
-    figures = [
-        (REV_FIGS / "figure1_discovery_cohorts.png", "Figure 1. Discovery cohorts used in the analysis."),
-        (V2_FIGS / "figure_v2_meta_priority.png", "Figure 2. Meta-priority ranking after adding pooled effects and evidence tiers."),
-        (V2_FIGS / "figure_v2_pathway_heterogeneity.png", "Figure 3. Pathway effect size versus heterogeneity."),
-        (REV_FIGS / "figure2_target_ranking.png", "Figure 4. Original composite ranking retained for comparison with the meta-analytic ranking."),
-    ]
+    figures = generate_final_submission_figures()
     for path, caption in figures:
         p = doc.add_paragraph()
         p.add_run(caption).bold = True
@@ -220,16 +375,21 @@ def build_blinded_manuscript() -> tuple[Path, int, int]:
         "Endothelial and coagulation pathways remain clinically important for KFD, but in this manuscript they are deliberately framed as mechanistic hypotheses rather than transcriptomically validated drivers. That narrower interpretation is more scientifically reliable and more likely to survive critical review.",
         "The intervention shortlist is therefore retained only as a staged translational hypothesis set. Plasma or platelet support reflects standard supportive care, while tranexamic acid, atorvastatin, and N-acetylcysteine remain candidates for future evaluation rather than recommendations for routine use. For tranexamic acid in particular, the computational rationale should be interpreted in the context of broader hemorrhage literature rather than as direct evidence for KFD efficacy.[18]",
     ]:
-        doc.add_paragraph(text)
+        p = doc.add_paragraph()
+        add_formatted_run(p, text)
 
     doc.add_heading("LIMITATIONS", level=2)
-    doc.add_paragraph(
-        "No KFD-specific transcriptomic data were available. The current evidence therefore depends on dengue proxy cohorts, blood-derived transcriptomes only, and approximate variance reconstruction for the random-effects meta-analysis. The data support prioritization under uncertainty, not therapeutic validation."
+    p = doc.add_paragraph()
+    add_formatted_run(
+        p,
+        "No KFD-specific transcriptomic data were available. The current evidence therefore depends on dengue proxy cohorts, blood-derived transcriptomes only, and approximate variance reconstruction for the random-effects meta-analysis. The data support prioritization under uncertainty, not therapeutic validation.",
     )
 
     doc.add_heading("CONCLUSIONS", level=1)
-    doc.add_paragraph(
-        "This version is the most statistically explicit and scientifically cautious iteration currently possible from existing assets. Inflammatory targets have the strongest transcriptomic support, whereas endothelial and coagulation pathways remain clinically meaningful but mechanistic KFD hypotheses requiring disease-specific validation."
+    p = doc.add_paragraph()
+    add_formatted_run(
+        p,
+        "This version is the most statistically explicit and scientifically cautious iteration currently possible from existing assets. Inflammatory targets have the strongest transcriptomic support, whereas endothelial and coagulation pathways remain clinically meaningful but mechanistic KFD hypotheses requiring disease-specific validation.",
     )
 
     doc.add_page_break()
@@ -303,15 +463,15 @@ def build_cover_letter() -> Path:
 
 def build_response_letter() -> Path:
     rows = [
-        ("1. Methodology transparency was insufficient.", "We rebuilt the computational workflow to make each analytical step explicit. The manuscript now describes cohort selection, preprocessing, probe-to-gene collapsing, within-cohort differential-expression analysis, the prespecified 50-gene host-response panel, the deterministic prioritization formula, and the added random-effects meta-analysis with confidence intervals and heterogeneity metrics.", "Methods; Supplementary Tables S1-S4"),
+        ("1. Methodology transparency was insufficient.", "We rebuilt the computational workflow to make each analytical step explicit. The manuscript now describes cohort selection, preprocessing, probe-to-gene collapsing, within-cohort differential-expression analysis, the prespecified 50-gene host-response panel, the deterministic prioritization formula, and the added random-effects meta-analysis with confidence intervals and heterogeneity metrics.", "Methods; Supplementary Tables S1-S6"),
         ("2. Gene signature derivation appeared arbitrary.", "We clarified that the 50 genes are not presented as a de novo KFD-specific discovery signature. Instead, they constitute a prespecified mechanistic host-response panel spanning cytokine, endothelial, coagulation, platelet, neurological, and oxidative-stress biology. The manuscript now separates panel construction from transcriptomic evidence strength.", "Abstract, Methods, Discussion, Supplementary Table S2"),
-        ("3. Composite score needed clearer definition.", "We retained the explicit deterministic prioritization framework and further strengthened it by adding an orthogonal random-effects meta-analysis layer. This allows readers to distinguish mechanistic prioritization from pooled transcriptomic evidence and uncertainty.", "Methods; Results; Supplementary Tables S2-S4"),
+        ("3. Composite score needed clearer definition.", "We retained the explicit deterministic prioritization framework and further strengthened it by adding an orthogonal random-effects meta-analysis layer. This allows readers to distinguish mechanistic prioritization from pooled transcriptomic evidence and uncertainty.", "Methods; Results; Supplementary Tables S2-S6"),
         ("4. The original multi-omics framing was overstated.", "We removed the unsupported multi-omics framing throughout and now describe the study as a cross-flaviviral transcriptomic evidence and mechanistic prioritization framework.", "Title, Abstract, Introduction, Conclusions"),
         ("5. Results and interpretation were inconsistent.", "We reconciled the narrative with the underlying data. The final manuscript states that inflammatory targets have the strongest transcriptomic support, while endothelial and coagulation targets remain clinically meaningful but mechanistic hypotheses with weaker transcriptomic backing in the current datasets.", "Results, Discussion, Conclusions, Tables 1-3"),
         ("6. Clinical recommendations were premature.", "We removed directive therapeutic language. The intervention shortlist is now explicitly labeled hypothesis-generating only, and supportive-care products are distinguished from exploratory repurposing candidates.", "Abstract, Table 3, Discussion, Conclusions"),
         ("7. Cross-virus extrapolation required stronger justification.", "We narrowed the public discovery base to human dengue severity cohorts and added an explicit uncertainty framework. The manuscript now states clearly that current proxy datasets are insufficient for strong KFD-specific molecular claims and that disease-specific validation remains necessary.", "Introduction, Methods, Limitations, Conclusions"),
         ("8. Pathway classification required support.", "We retained pathway mapping grounded in established host-response biology and documented the categorized panel transparently in the manuscript and supplementary materials.", "Methods; Supplementary Table S2"),
-        ("9. Tables and figures needed closer agreement with claims.", "All tables and figures were regenerated directly from verified output files and re-audited against the manuscript text. Table captions, figure captions, and narrative claims now align with the evidence-tier summaries and pooled effect tables.", "Tables 1-3; Figures 1-4; Supplementary Tables"),
+        ("9. Tables and figures needed closer agreement with claims.", "All tables and figures were regenerated directly from verified output files and re-audited against the manuscript text. Figure graphics now use publication-facing numbering and titles without internal draft labels, and the supplementary tables were reformatted into compact summaries plus separate evidence-detail tables for readability.", "Tables 1-3; Figures 1-4; Supplementary Tables S1-S6"),
         ("10. Limitations required more emphasis.", "We expanded the limitations substantially. The manuscript now states that no gene reached strict cross-cohort support under the current public data base, that several vascular/coagulation targets are mechanistic rather than recurrent transcriptomic findings, and that KFD-specific data are still required for validation.", "Abstract, Results, Limitations, Conclusions"),
     ]
     doc = Document()
@@ -374,6 +534,65 @@ def build_supplementary() -> Path:
                     txt = str(val)
                 table.rows[i].cells[j].text = txt
 
+    meta_summary = meta[
+        [
+            "MetaRank",
+            "GeneSymbol",
+            "Pathway",
+            "EvidenceTier",
+            "NominalSupportCount",
+            "RandomEffect",
+            "Lower95CI",
+            "Upper95CI",
+            "PooledPValue",
+            "I2",
+        ]
+    ].copy()
+    meta_summary["Pathway"] = meta_summary["Pathway"].map(prettify_pathway)
+    meta_summary["Pooled effect (95% CI)"] = meta_summary.apply(
+        lambda row: f"{row['RandomEffect']:.2f} ({row['Lower95CI']:.2f} to {row['Upper95CI']:.2f})",
+        axis=1,
+    )
+    meta_summary["Pooled P value"] = meta_summary["PooledPValue"].map(lambda x: f"{x:.3g}")
+    meta_summary["Mean I-squared"] = meta_summary["I2"].map(lambda x: f"{x:.1f}")
+    meta_summary = meta_summary[
+        [
+            "MetaRank",
+            "GeneSymbol",
+            "Pathway",
+            "EvidenceTier",
+            "NominalSupportCount",
+            "Pooled effect (95% CI)",
+            "Pooled P value",
+            "Mean I-squared",
+        ]
+    ]
+
+    meta_detail = meta[["MetaRank", "GeneSymbol", "PerStudyEffects"]].copy()
+    meta_detail["PerStudyEffects"] = meta_detail["PerStudyEffects"].str.replace("; ", "\n", regex=False)
+
+    transl_summary = transl.copy()
+    transl_summary["Pathway"] = transl_summary["Pathway"].map(prettify_pathway)
+    transl_summary["Pooled effect (95% CI)"] = transl_summary.apply(
+        lambda row: f"{row['RandomEffect']:.2f} ({row['Lower95CI']:.2f} to {row['Upper95CI']:.2f})",
+        axis=1,
+    )
+    transl_summary = transl_summary[
+        [
+            "MetaRank",
+            "GeneSymbol",
+            "Pathway",
+            "EvidenceTier",
+            "NominalSupportCount",
+            "Pooled effect (95% CI)",
+            "I2",
+        ]
+    ].copy()
+    transl_summary["I2"] = transl_summary["I2"].map(lambda x: f"{x:.1f}")
+
+    transl_detail = transl[["MetaRank", "GeneSymbol", "PerStudyEffects"]].copy()
+    transl_detail["PerStudyEffects"] = transl_detail["PerStudyEffects"].str.replace("; ", "\n", regex=False)
+
     doc.add_heading("Supplementary Methods", level=1)
     for text in [
         "Processed GEO series-matrix files were analyzed within cohort to avoid inappropriate cross-platform normalization.",
@@ -383,10 +602,12 @@ def build_supplementary() -> Path:
         doc.add_paragraph(text)
 
     add_df("Table S1. Discovery cohort summary", cohorts)
-    add_df("Table S2. Full meta-analysis target table", meta)
-    add_df("Table S3. Translational target subset", transl)
-    add_df("Table S4. Evidence-tier summary by pathway", evidence)
-    add_df("Table S5. Original revision ranking retained for comparison", revision_targets[["Rank", "GeneSymbol", "Pathway", "CompositeScore", "DatasetsSupporting"]])
+    add_df("Table S2. Full meta-analysis target summary", meta_summary)
+    add_df("Table S3. Cohort-specific effect details for the 50-gene panel", meta_detail)
+    add_df("Table S4. Translational target summary", transl_summary)
+    add_df("Table S5. Cohort-specific evidence details for translational targets", transl_detail)
+    add_df("Table S6. Evidence-tier summary by pathway", evidence)
+    add_df("Table S7. Original revision ranking retained for comparison", revision_targets[["Rank", "GeneSymbol", "Pathway", "CompositeScore", "DatasetsSupporting"]])
 
     out = MANUSCRIPT_DIR / "Supplementary_Materials_KFD_Final.docx"
     doc.save(out)
@@ -394,6 +615,7 @@ def build_supplementary() -> Path:
 
 
 def main() -> None:
+    generate_final_submission_figures()
     manuscript, total_words, abstract_words = build_blinded_manuscript()
     title = build_title_page(total_words, abstract_words)
     cover = build_cover_letter()
